@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "target": "es2018",
+    "noImplicitAny": false,
+    "moduleResolution": "node",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "module": "commonjs",
+    "sourceMap": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "outDir": "build",
+    "baseUrl": ".",
+    "paths": {
+      "@shared/*": ["shared/*"],
+    }
+  },
+  "typeAcquisition": { "enable": true },
+  "exclude": ["build", "node_modules"]
+}
+/* Visit https://aka.ms/tsconfig to read more about this file */

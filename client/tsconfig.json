@@ -1,0 +1,13 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "jsx": "preserve",
+    "allowJs": true,
+    "allowImportingTsExtensions": true,
+    "noEmit": true,
+    "outDir": "../build/client",
+    "baseUrl": "."
+  },
+  "include": ["**/*.ts", "**/*.tsx", "src/main.tsx"],
+  "exclude": ["../server/**/*"]
+}

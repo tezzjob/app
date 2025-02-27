@@ -1,0 +1,90 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
+  binaryTargets   = ["native", "debian-openssl-1.1.x"]
+}
+
+datasource db {
+  provider   = "postgresql"
+  url        = env("DB_URI")
+  extensions = [pgcrypto]
+}
+
+model Employee {
+    id      Int       @id @default(autoincrement())
+    name    String
+    email   String
+    mobile  String
+    locality String[]
+
+    employeeShopMapping EmployeeShopMapping[]
+    employeeJobPostingMapping EmployeeJobPostingMapping[]
+    
+    @@unique([email], name: "unique_email")
+    @@unique([mobile], name: "unique_mobile")
+    @@map("employee")
+}
+
+model Shop {
+  id      Int @id @default(autoincrement())
+  uuid    String @db.Uuid() @default(uuid())
+  shopName String @map("shop_name")
+  ownerName String @map("owner_name")
+  shopLocation String @map("shop_location")
+  ownerEmail String @map("owner_email")
+  ownerMobile String @map("owner_mobile")
+  password String @map("password")
+  isEmailValidated Boolean @map("is_email_validated") @default(false)
+  workingHours String? @map("working_hours")
+  businessCategory String? @map("business_category")
+
+  employeeShopMapping EmployeeShopMapping[]
+  jobPostings         JobPosting[]
+  
+  @@unique([ownerEmail], name: "unique_shop_email")
+  @@unique([ownerMobile], name: "unique_shop_mobile")
+  @@unique([uuid], name: "unique_uuid")
+
+  @@map("shop")
+}
+
+model EmployeeShopMapping {
+  id      Int @id @default(autoincrement())
+  employeeId Int @map("employee_id")
+  shopId     Int @map("shop_id")
+
+  employee Employee @relation(fields: [employeeId], references: [id])
+  shop Shop @relation(fields: [shopId], references: [id])
+
+  @@unique([employeeId, shopId], name: "unique_employee_shop")
+  @@map("employee_shop_mapping")
+}
+
+model JobPosting {
+  id Int @id @default(autoincrement())
+  jobTitle String @map("job_title")
+  salaryPerMonth String @map("salary_per_month")
+  timingFrom String @map("timing_from")
+  timingTo String @map("timing_to")
+  shopId   Int @map("shop_id")
+  isActive Boolean @default(true)
+
+  shop Shop @relation(fields: [shopId], references: [id])
+  employeeJobPostingMapping EmployeeJobPostingMapping[]
+
+  @@map("job_postings")
+  @@unique([jobTitle, shopId], name: "unique_job_title")
+}
+
+model EmployeeJobPostingMapping {
+  id Int @id @default(autoincrement())
+  employeeId Int @map("employee_id")
+  jobPostingId Int @map("job_posting_id")
+  isShortListed Boolean @map("is_shortlisted") @default(false)
+
+  employee Employee @relation(fields: [employeeId], references: [id])
+  jobPosting JobPosting @relation(fields: [jobPostingId], references: [id])
+
+  @@unique([employeeId, jobPostingId], name: "unique_employee_job_posting")
+  @@map("employee_job_posting_mapping")
+}
