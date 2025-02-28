@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Card, CardContent, Typography, Button, Grid } from '@mui/material';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { API_ENDPOINT_URL } from '../config';
 
 const AllJobPostings = () => {
   const navigate = useNavigate();
@@ -11,7 +12,7 @@ const AllJobPostings = () => {
   useEffect(() => {
     const fetchJobPostings = async () => {
       try {
-        const response = await fetch('http://localhost:8080/api/shop-details', {
+        const response = await fetch(`${API_ENDPOINT_URL}/shop-details`, {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('jwtToken')}`,

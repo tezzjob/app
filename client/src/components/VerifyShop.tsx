@@ -1,6 +1,7 @@
 import { Button, Grid2, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
+import { API_ENDPOINT_URL } from '../config';
 
 const VerifyShop = () => {
   const [status, setStatus] = useState('Verifying...');
@@ -14,7 +15,7 @@ const VerifyShop = () => {
       return;
     }
 
-      fetch(`http://localhost:8080/api/verify?uuid=${uuid}`, {
+      fetch(`${API_ENDPOINT_URL}/verify?uuid=${uuid}`, {
           method: 'GET'})
       .then((response) => response.json())
       .then((data) => {

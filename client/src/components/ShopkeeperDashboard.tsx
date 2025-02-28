@@ -11,6 +11,7 @@ import {
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import EditIcon from '@mui/icons-material/Edit';
 import { useNavigate } from 'react-router-dom';
+import { API_ENDPOINT_URL } from '../config';
 
 interface ShopDetails {
   shop: {
@@ -41,7 +42,7 @@ const ShopkeeperDashboard = () => {
       const token = localStorage.getItem('jwtToken'); // Retrieve the JWT token
 
       // Add JWT token to headers
-      const response = await fetch('http://localhost:8080/api/shop-details', {
+      const response = await fetch(`${API_ENDPOINT_URL}/shop-details`, {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${token}`
@@ -67,7 +68,7 @@ const ShopkeeperDashboard = () => {
 
   const handleLogout = async () => {
     try {
-      const response = await fetch('http://localhost:8080/api/logout', {
+      const response = await fetch(`${API_ENDPOINT_URL}/logout`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

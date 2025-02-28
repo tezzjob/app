@@ -10,6 +10,7 @@ import {
   InputAdornment,
 } from '@mui/material';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { API_ENDPOINT_URL } from '../config';
 
 const CreateJob = () => {
   const [jobTitle, setJobTitle] = useState('');
@@ -34,7 +35,7 @@ const [error, setError] = useState<string | null>(null);
     };
 
     try {
-      const response = await fetch('http://localhost:8080/api/create-job', {
+      const response = await fetch(`${API_ENDPOINT_URL}/create-job`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

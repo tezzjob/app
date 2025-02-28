@@ -10,6 +10,7 @@ import {
   Alert,
 } from '@mui/material';
 import { useParams, useNavigate } from 'react-router-dom';
+import { API_ENDPOINT_URL } from '../config';
 
 const EmployeesApplied = () => {
   const { id } = useParams(); // Get Job ID from URL
@@ -30,7 +31,7 @@ const EmployeesApplied = () => {
   useEffect(() => {
     const fetchEmployees = async () => {
       try {
-        const response = await fetch(`http://localhost:8080/api/applied-employees?jobId=${id}`, {
+        const response = await fetch(`${API_ENDPOINT_URL}/applied-employees?jobId=${id}`, {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('jwtToken')}`,
@@ -63,7 +64,7 @@ const EmployeesApplied = () => {
 
   const handleShortlist = async (employeeId: string, employeeName: string) => {
     try {
-      const response = await fetch(`http://localhost:8080/api/shortlist-employee?employeeId=${employeeId}&jobId=${id}`, {
+      const response = await fetch(`${API_ENDPOINT_URL}/shortlist-employee?employeeId=${employeeId}&jobId=${id}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

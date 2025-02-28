@@ -6,6 +6,7 @@ import httpStatus from 'http-status'
 import logger from '../utils/logger'
 import { sendEmail } from '../mailer/sendMail'
 import { Employee, EmployeeShopMapping, Prisma, Shop } from '@prisma/client'
+import { APP_URL } from '../utils/config'
 import { Api } from '@mui/icons-material'
 
 export const createEmployee = async (employeeData: z.infer<typeof SignUpReq>) => {
@@ -98,7 +99,7 @@ const sendEmailWrapper = async (employee: Employee) => {
       .map((mapping) => {
         const jobPostingsHtml = mapping.shop.jobPostings
           .map((job) => {
-            const applyLink = `http://localhost:3000/apply?employeeId=${employee.id}&jobId=${job.id}`;
+            const applyLink = `${APP_URL}/apply?employeeId=${employee.id}&jobId=${job.id}`;
             return `
               <li style="margin-bottom: 5px;">
                 <p style="margin: 0;">Job Title: ${job.jobTitle}</p>

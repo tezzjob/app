@@ -5,6 +5,7 @@ import ErrorOutline from '@mui/icons-material/ErrorOutline';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { validateEmail, validateMobile } from '../util/helper';
 import { useNavigate } from 'react-router-dom';
+import { API_ENDPOINT_URL } from '../config';
 
 const ShopKeeperLogin = () => {
   const [email, setEmail] = useState('');
@@ -71,7 +72,7 @@ const ShopKeeperLogin = () => {
 
     try {
       const response = await fetch(
-        `http://localhost:8080/api/shopkeeper/signup`,
+        `${API_ENDPOINT_URL}/shopkeeper/signup`,
         {
           method: 'POST',
           headers: {
@@ -115,7 +116,7 @@ const ShopKeeperLogin = () => {
 
     try {
       const response = await fetch(
-        `http://localhost:8080/api/shopkeeper/login`,
+        `${API_ENDPOINT_URL}/shopkeeper/login`,
         {
           method: 'POST',
           headers: {
@@ -153,7 +154,7 @@ const ShopKeeperLogin = () => {
 
     try {
       const response = await fetch(
-        `http://localhost:8080/api/forgot-password`,
+        `${API_ENDPOINT_URL}/forgot-password`,
         {
           method: 'POST',
           headers: {

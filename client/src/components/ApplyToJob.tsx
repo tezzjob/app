@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Typography, Grid, CircularProgress } from '@mui/material';
+import { API_ENDPOINT_URL } from '../config';
 
 const ApplyToJob = () => {
   const location = useLocation();
@@ -14,7 +15,7 @@ const ApplyToJob = () => {
 
     const applyToJob = async () => {
       try {
-        const response = await fetch(`http://localhost:8080/api/apply-to-job?employeeId=${employeeId}&jobId=${jobId}`, {
+        const response = await fetch(`${API_ENDPOINT_URL}/apply-to-job?employeeId=${employeeId}&jobId=${jobId}`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

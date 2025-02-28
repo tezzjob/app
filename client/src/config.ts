@@ -1,6 +1,2 @@
-const API_ENDPOINT_URL =
-  process.env.APP_ENV === 'production'
-    ? '/api' // Production: relative path, same domain
-    : 'http://localhost:8080/api'; // Development: server URL
-
-export default API_ENDPOINT_URL;
+export const API_ENDPOINT_URL =
+  import.meta.env.VITE_API_ENDPOINT_URL || 'http://localhost:8080/api';

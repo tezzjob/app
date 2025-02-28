@@ -27,6 +27,7 @@ import bodyParser from 'body-parser';
 import httpStatus from 'http-status';
 import { Create } from '@mui/icons-material';
 import { sendEmail } from '../mailer/sendMail';
+import { APP_URL } from '../utils/config';
 
 const routes = express.Router();
 
@@ -143,7 +144,7 @@ routes.post('/forgot-password', async (req, res) => {
     throw new ApiError(httpStatus.BAD_REQUEST, `Email is required`)
   }
 
-  const resetPasswordLink = `http://localhost:3000/reset-password?userEmail=${encodeURIComponent(email)}`;
+  const resetPasswordLink = `${APP_URL}/reset-password?userEmail=${encodeURIComponent(email)}`;
   const emailContent = `
     <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
       <p>Hey there,</p>

@@ -7,6 +7,7 @@ import { data } from 'react-router-dom'
 import { sendEmail } from '../mailer/sendMail'
 import { Shop } from '@prisma/client'
 import { LoggedInUserType } from '../middlewares/auth'
+import { APP_URL } from '../utils/config'
 
 export const registerShop = async (req: z.infer<typeof RegisterShopReq>) => {
 
@@ -52,7 +53,7 @@ export const registerShop = async (req: z.infer<typeof RegisterShopReq>) => {
     await sendEmail(shop.ownerEmail, 'Validate Email', `
     Hi ${shop.ownerName}, <br />
     Please click below link to verify your email 
-    http://localhost:3000/verify?uuid=${shop.uuid}    
+    ${APP_URL}/verify?uuid=${shop.uuid}    
     `)
 }
 

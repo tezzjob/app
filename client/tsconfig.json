@@ -6,7 +6,8 @@
     "allowImportingTsExtensions": true,
     "noEmit": true,
     "outDir": "../build/client",
-    "baseUrl": "."
+    "baseUrl": ".",
+    "module": "ES2020"
   },
   "include": ["**/*.ts", "**/*.tsx", "src/main.tsx"],
   "exclude": ["../server/**/*"]

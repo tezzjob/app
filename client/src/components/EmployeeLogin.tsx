@@ -13,6 +13,7 @@ import HowToRegOutlinedIcon from '@mui/icons-material/HowToRegOutlined';
 import React, { useState } from 'react';
 import { validateEmail, validateMobile } from '../util/helper';
 import { useNavigate } from 'react-router-dom';
+import { API_ENDPOINT_URL } from '../config';
 
 const EmployeeLogin = () => {
   const [name, setName] = useState('');
@@ -44,7 +45,7 @@ const EmployeeLogin = () => {
 
     setDisplayMail(email);
     try {
-      const response = await fetch(`http://localhost:8080/api/employee/signup`, {
+      const response = await fetch(`${API_ENDPOINT_URL}/employee/signup`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -9,6 +9,7 @@ import {
   Grid,
   Alert,
 } from '@mui/material';
+import { API_ENDPOINT_URL } from '../config';
 
 const ResetPassword = () => {
   const location = useLocation();
@@ -32,7 +33,7 @@ const ResetPassword = () => {
     }
 
     try {
-      const response = await fetch('http://localhost:8080/api/reset-password', {
+      const response = await fetch(`${API_ENDPOINT_URL}/reset-password`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
