@@ -9,7 +9,7 @@ import { APP_URL } from './utils/config'
 const app = express()
 
 // Use CORS
-app.use(cors());
+app.use(cors({ origin: process.env.VITE_APP_URL, credentials: true }));
 
 // Optionally configure specific origins
 app.use(
