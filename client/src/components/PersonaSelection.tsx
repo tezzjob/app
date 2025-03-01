@@ -40,7 +40,7 @@ const PersonaSelection = () => {
           {/* Image Section */}
           <Box
             component="img"
-            src="../../public/images/job-search.png"
+            src="images/job-search.png"
             alt="Job Search Icon"
             sx={{
               display: 'block', // Center the image
@@ -90,7 +90,7 @@ const PersonaSelection = () => {
           {/* Image Section */}
           <Box
             component="img"
-            src="../../public/images/person-search.png"
+            src="images/person-search.png"
             alt="Job Search Icon"
             sx={{
               display: 'block', // Center the image
