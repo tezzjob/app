@@ -25,46 +25,46 @@ function App() {
   return (
     <>
       <AppBar
-        sx={{ background: '#fff', boxShadow: 'none' }}
+        sx={{ background: "#fff", boxShadow: "none" }}
         position="static"
         color="primary"
       >
         <Toolbar>
           <Grid2
             sx={{
-              display: 'flex',
-              justifyContent: { xs: 'space-between', sm: 'unset' },
-              textAlign: { xs: 'center', sm: 'left' },
+              display: "flex",
+              justifyContent: { xs: "space-between", sm: "unset" },
+              textAlign: { xs: "center", sm: "left" },
               flexGrow: 1,
             }}
           >
             <Grid2
               sx={{
-                display: 'flex',
-                alignItems: 'center',
-                paddingLeft: { xs: 'none', md: '200px' },
+                display: "flex",
+                alignItems: "center",
+                paddingLeft: { xs: "none", md: "200px" },
               }}
-              onClick={() => window.location.replace('/')}
+              onClick={() => window.location.replace("/")}
             >
               <img src={logo} alt="logo" width={250} />
             </Grid2>
             {/* Navigation Links for Larger Screens */}
             <Box
               sx={{
-                display: { xs: 'none', sm: 'flex' },
-                paddingLeft: { xs: 'none', sm: '250px' },
-                justifyContent: 'space-between',
-                width: '30%',
+                display: { xs: "none", sm: "flex" },
+                paddingLeft: { xs: "none", sm: "250px" },
+                justifyContent: "space-between",
+                width: "30%",
               }}
             >
               <Button
                 component={Link}
                 to="/persona-selection"
-                sx={{ fontSize: '18px' }}
+                sx={{ fontSize: "18px" }}
               >
                 Get Started
               </Button>
-              <Button component={Link} to="/about" sx={{ fontSize: '18px' }}>
+              <Button component={Link} to="/about" sx={{ fontSize: "18px" }}>
                 About
               </Button>
             </Box>
@@ -73,7 +73,7 @@ function App() {
             <IconButton
               edge="end"
               aria-label="menu"
-              sx={{ display: { xs: 'block', sm: 'none' } }}
+              sx={{ display: { xs: "block", sm: "none" } }}
               onClick={handleDrawerToggle}
             >
               <MenuIcon />
@@ -87,6 +87,9 @@ function App() {
         <List sx={{ width: 250 }}>
           <ListItem component={Link} to="/" onClick={handleDrawerToggle}>
             <ListItemText primary="Home" />
+          </ListItem>
+          <ListItem component={Link} to="/persona-selection" onClick={handleDrawerToggle}>
+            <ListItemText primary="Get Started" />
           </ListItem>
           <ListItem component={Link} to="/about" onClick={handleDrawerToggle}>
             <ListItemText primary="About" />
