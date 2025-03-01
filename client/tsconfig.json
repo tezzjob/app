@@ -1,14 +1,20 @@
 {
   "extends": "../tsconfig.json",
   "compilerOptions": {
-    "jsx": "preserve",
+    "jsx": "react-jsx",
     "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
     "allowImportingTsExtensions": true,
     "noEmit": true,
-    "outDir": "../build/client",
     "baseUrl": ".",
-    "module": "ES2020"
+    "outDir": "../build/client",
+    "module": "esnext",
+    "target": "ESNext",
+    "moduleResolution": "Node",
+    "types": ["vite/client"]
   },
-  "include": ["**/*.ts", "**/*.tsx", "src/main.tsx"],
-  "exclude": ["../server/**/*"]
+  "include": ["src"],
+  "exclude": ["../server"]
 }

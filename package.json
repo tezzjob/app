@@ -8,10 +8,10 @@
     "dev:client": "vite",
     "dev:server": "nodemon --watch 'server/src/**/*.ts' --ignore 'server/src/**/*.spec.ts' -r dotenv/config -r tsconfig-paths/register --exec 'ts-node --files server/src/index.ts'",
     "dev": "concurrently \"npm run dev:client\" \"npm run dev:server\"",
-    "build:client": "vite build",
-    "build:server": "tsc --project tsconfig.json",
+    "build:client": "cd client && vite build",
+    "build:server": "cd server && tsc --project tsconfig.json",
     "build": "npm run build:client && npm run build:server",
-    "start": "node build/server/index.js"
+    "start": "APP_ENV=production node build/server/index.js"
   },
   "prisma": {
     "schema": "./server/src/prisma/schema.prisma"
@@ -27,7 +27,7 @@
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
     "@types/jsonwebtoken": "^9.0.9",
-    "@types/node": "^17.0.15",
+    "@types/node": "^22.13.8",
     "@types/nodemailer": "^6.4.17",
     "@vitejs/plugin-react": "^4.3.3",
     "concurrently": "^9.1.0",
@@ -54,6 +54,7 @@
     "@mui/material": "^6.1.8",
     "@mui/styles": "^6.4.6",
     "@prisma/client": "^4.10.1",
+    "@vercel/node": "^5.1.10",
     "bcryptjs": "^3.0.2",
     "body-parser": "^1.20.3",
     "cors": "^2.8.5",

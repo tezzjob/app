@@ -1,5 +1,8 @@
 {
   "compilerOptions": {
+    "jsx": "react-jsx",
+    "allowImportingTsExtensions": true,
+    "noEmit": true,
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "target": "es2020",
@@ -7,7 +10,7 @@
     "moduleResolution": "node",
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "module": "commonjs",
+    "module": "es2020",
     "sourceMap": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
