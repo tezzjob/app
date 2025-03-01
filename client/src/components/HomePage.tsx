@@ -7,15 +7,15 @@ import Carousel from 'react-material-ui-carousel';
 const HomePage = () => {
   const images = [
     {
-      src: '../../public/homepage-image1.jpg',
+      src: '../../public/images/homepage-image1.jpg',
       alt: 'Image 1',
     },
     {
-      src: '../../public/homepage-image2.jpg',
+      src: '../../public/images/homepage-image2.jpg',
       alt: 'Image 2',
     },
     {
-      src: '../../public/homepage-image3.jpg',
+      src: '../../public/images/homepage-image3.jpg',
       alt: 'Image 3',
     },
   ];

@@ -13,7 +13,7 @@ import {
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import Grid2 from '@mui/material/Grid2'; // Import Grid2 from @mui/material
-import logo from '../../public/tezzjob-logo.png'; // Replace with your logo
+import logo from '../../public/images/tezzjob-logo.png'; // Replace with your logo
 
 function App() {
   const [drawerOpen, setDrawerOpen] = useState(false);
