@@ -4,7 +4,7 @@
     "lib": ["ESNext"],
     "moduleResolution": "Node",
     "outDir": "../build/server",
-    "rootDir": "src",
+    "rootDir": ".",
     "strict": true,
     "allowJs": true,
     "esModuleInterop": true,
