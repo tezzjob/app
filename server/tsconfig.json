@@ -4,13 +4,12 @@
     "lib": ["ESNext"],
     "moduleResolution": "Node",
     "outDir": "../build/server",
-    "rootDir": ".",
     "strict": true,
     "allowJs": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "noImplicitAny": false
   },
-  "include": ["src"],
+  "include": ["./src/**/*"],
   "exclude": ["node_modules", "dist", "build", "client"]
 }

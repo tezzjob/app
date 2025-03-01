@@ -1,6 +1,6 @@
-import app from "./src/app";
-import { APP_PORT } from "./src/utils/config";
-import logger from "./src/utils/logger";
+import app from "./app";
+import { APP_PORT } from "./utils/config";
+import logger from "./utils/logger";
 
 const init = async () => {
   logger.info("starting server..");
