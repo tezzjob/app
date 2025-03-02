@@ -1,7 +1,7 @@
 {
   "name": "tezzjob",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "index.ts",
   "scripts": {
     "migrate": "prisma migrate deploy",
     "migrate-dev": "prisma migrate dev --name",
