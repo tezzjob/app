@@ -4,20 +4,20 @@ import logger from './utils/logger'
 import httpStatus from "http-status"
 import routes from './routes/index.routes'
 import {ApiError, errorConverter, errorHandler } from './middlewares/errors'
+import { APP_URL } from './utils/config'
 
 const app = express()
 
 // Use CORS
 app.use(cors({ origin: "*" }));
 
-// Optionally configure specific origins
-// app.use(
-//   cors({
-//     origin: `${APP_URL}`, // Allow requests from this origin only
-//     methods: 'GET,POST,PUT,DELETE', // Allowed HTTP methods
-//     allowedHeaders: 'Content-Type,Authorization', // Allowed headers
-//   })
-// );
+app.use(
+  cors({
+    origin: `${APP_URL}`, // Allow requests from this origin only
+    methods: 'GET,POST,PUT,DELETE', // Allowed HTTP methods
+    allowedHeaders: 'Content-Type,Authorization', // Allowed headers
+  })
+);
 
 app.use(express.json({ limit: "50mb" }));
 
