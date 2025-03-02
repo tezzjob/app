@@ -176,6 +176,10 @@ app.post('/logout', (req, res) => {
   res.status(200).json({ auth: false, token: null });
 });
 
+app.use('/hello',(_req, _res) => {
+  _res.send('Hello World')
+})
+
 // send back a 404 error for any unknown api request
 app.use((_req, _res, next) => {
   logger.error('Not found')
