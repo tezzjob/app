@@ -2,8 +2,11 @@ import { VercelRequest, VercelResponse } from "@vercel/node";
 import app from "../src/app";
 import serverlessExpress from "@codegenie/serverless-express";
 
-const server = serverlessExpress({ app });
+let server: any;
 
-export default function handler(req: VercelRequest, res: VercelResponse) {
+export default async function handler(req: VercelRequest, res: VercelResponse) {
+  if (!server) {
+    server = serverlessExpress({ app });
+  }
   return server(req, res);
 }
