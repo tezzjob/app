@@ -11,7 +11,7 @@
     "build:client": "cd client && vite build",
     "build:server": "cd server && tsc --project tsconfig.json",
     "build": "npm run build:client && npm run build:server",
-    "start": "APP_ENV=production node build/server/index.js"
+    "start": "APP_ENV=production node api/index.ts"
   },
   "prisma": {
     "schema": "./server/src/prisma/schema.prisma"
