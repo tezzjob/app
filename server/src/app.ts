@@ -176,7 +176,7 @@ app.post('/logout', (req, res) => {
   res.status(200).json({ auth: false, token: null });
 });
 
-app.use('/hello',(_req, _res) => {
+app.use('/',(_req, _res) => {
   _res.send('Hello World')
 })
 
