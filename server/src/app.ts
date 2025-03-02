@@ -45,10 +45,10 @@ app.use(errorConverter);
 
 app.use(errorHandler);
 
-if(process.env.APP_ENV === 'production') {
-  app.listen(8080, () => {
-    logger.info('Server is running on port 8080')
-  })
-}
+// if(process.env.APP_ENV === 'production') {
+//   app.listen(8080, () => {
+//     logger.info('Server is running on port 8080')
+//   })
+// }
 
 export default app
