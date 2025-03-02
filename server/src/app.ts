@@ -31,7 +31,7 @@ app.use("/error", async () => {
 
 // app.use('/', routes);
 
-app.get('/', async (req, res) => {
+app.use('/', async (req, res) => {
   res.send({message: "Hello World"})
 })
 
