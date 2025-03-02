@@ -1,12 +1,11 @@
-import { VercelRequest, VercelResponse } from "@vercel/node";
 import app from "../src/app";
 import serverlessExpress from "@codegenie/serverless-express";
 
 let server: any;
 
-export default async function handler(req: VercelRequest, res: VercelResponse) {
+export const handler = async (event: any, context: any) => {
   if (!server) {
-    server = serverlessExpress({ app });
+    server = serverlessExpress({ app }); // ✅ Initialize only once
   }
-  return server(req, res);
-}
+  return server(event, context);
+};
