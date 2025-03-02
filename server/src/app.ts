@@ -29,7 +29,7 @@ app.use("/error", async () => {
   throw new Error();
 })
 
-app.use('/', routes);
+app.use('/api', routes);
 
 // send back a 404 error for any unknown api request
 app.use((_req, _res, next) => {
