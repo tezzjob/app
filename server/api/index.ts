@@ -27,6 +27,7 @@ import {
   JobIdQ,
 } from "../src/utils/req.zod";
 import { validateType } from "../src/utils/validations";
+import prisma from "../src/prisma/prisma";
 
 const app = express();
 
@@ -41,13 +42,14 @@ app.use(
   })
 );
 
-app.use("/", (_req, _res) => {
-  _res.send("Hello World");
+app.use("/", async (_req, _res) => {
+  const result = await prisma.employee.count();
+  _res.send(`Found ${result} employees`);
 });
 
 app.use(express.json({ limit: "50mb" }));
 
-app.get("/api/heath-check", (_req, res) => {
+app.get("/heath-check", async (_req, res) => {
   res.send("Status: Healthy");
 });
 
