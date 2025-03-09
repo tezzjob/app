@@ -41,19 +41,19 @@ app.use("/error", async () => {
 
 app.use(bodyParser.json());
 
-app.post('/employee/signup', async (req, res) => {
+app.use('/employee/signup', async (req, res) => {
   const request = validateType(SignUpReq, req.body);
   const response = await createEmployee(request);
   res.send(response);
 });
 
-app.post('/shopkeeper/signup', async (req, res) => {
+app.use('/shopkeeper/signup', async (req, res) => {
   const request = validateType(RegisterShopReq, req.body);
   const response = await registerShop(request);
   res.send(response);
 });
 
-app.post(
+app.use(
   '/shopkeeper/login',
   async (req, res) => {
     const { ownerEmail, password } = req.body;
@@ -75,7 +75,7 @@ app.post(
   }
 );
 
-app.get('/verify', async (req, res) => {
+app.use('/verify', async (req, res) => {
   const request = validateType(UuidQueryParam, req);
 
   if (!request.query.uuid) {
