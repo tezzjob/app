@@ -31,7 +31,7 @@ app.use("/", (_req, _res) => {
 
 app.use(express.json({ limit: "50mb" }));
 
-app.get('/api/heath-check', (_req, res) => {
+app.use('/api/heath-check', (_req, res) => {
     res.send('Status: Healthy')
 })
 
