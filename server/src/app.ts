@@ -25,6 +25,10 @@ app.use(
   })
 );
 
+app.use("/", (_req, _res) => {
+  _res.send("Hello World");
+});
+
 app.use(express.json({ limit: "50mb" }));
 
 app.get('/heath-check', (_req, res) => {
@@ -175,10 +179,6 @@ app.post('/reset-password', async (req, res) => {
 app.post('/logout', (req, res) => {
   res.status(200).json({ auth: false, token: null });
 });
-
-app.use('/',(_req, _res) => {
-  _res.send('Hello World')
-})
 
 // send back a 404 error for any unknown api request
 app.use((_req, _res, next) => {
