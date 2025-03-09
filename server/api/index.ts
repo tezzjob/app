@@ -1,6 +1,8 @@
-import type { VercelRequest, VercelResponse } from "@vercel/node";
-import app from "../src/app";
+const express = require("express");
+const app = express();
 
-export default function handler(req: VercelRequest, res: VercelResponse) {
-  return app(req,res)
-}
+app.get("/", (req, res) => res.send("Express on Vercel"));
+
+app.listen(3000, () => console.log("Server ready on port 3000."));
+
+module.exports = app;
