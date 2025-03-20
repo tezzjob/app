@@ -7,5 +7,10 @@
       "config": { "distDir": "build/client" }
     }
   ],
-  "routes": [{ "src": "/api/(.*)", "dest": "server/src/index.ts" }]
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
 }
