@@ -34,14 +34,15 @@ const [error, setError] = useState<string | null>(null);
       timingTo: `${timingTo} ${timingToPeriod}`,
     };
 
+    const encodedPayload = btoa(JSON.stringify(jobData));
+
     try {
-      const response = await fetch(`${API_ENDPOINT_URL}?path=create-job&method=POST`, {
+      const response = await fetch(`${API_ENDPOINT_URL}?path=create-job&method=POST&payload=${encodedPayload}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${localStorage.getItem('jwtToken')}`,
         },
-        body: JSON.stringify(jobData),
       });
 
       if (!response.ok) {

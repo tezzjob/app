@@ -50,11 +50,19 @@ app.use("/", auth(), async (req, res, next) => {
       const response = await createEmployee(request);
       res.send(response);
     } else if (path === "shopkeeper/signup" && method === "POST") {
-      const request = validateType(RegisterShopReq, req.body);
+      const encodedPayload = req.query.payload;
+      const decodedPayload = JSON.parse(
+        Buffer.from(encodedPayload as string, "base64").toString("utf-8")
+      );
+      const request = validateType(RegisterShopReq, JSON.parse(decodedPayload));
       const response = await registerShop(request);
       res.send(response);
     } else if (path === "shopkeeper/login" && method === "POST") {
-      const { ownerEmail, password } = req.body;
+      const encodedPayload = req.query.payload;
+      const decodedPayload = JSON.parse(
+        Buffer.from(encodedPayload as string, "base64").toString("utf-8")
+      );
+      const { ownerEmail, password } = JSON.parse(decodedPayload);
       if(password === undefined || ownerEmail === undefined) {
         res.status(400).json({ auth: false, token: null });
         return
@@ -91,7 +99,11 @@ app.use("/", auth(), async (req, res, next) => {
 
       res.json({ success: status, message: msg });
     } else if (path === "forgot-password" && method === "POST") {
-      const { email } = req.body;
+      const encodedPayload = req.query.payload;
+      const decodedPayload = JSON.parse(
+        Buffer.from(encodedPayload as string, "base64").toString("utf-8")
+      );
+      const { email } = JSON.parse(decodedPayload);
         if (!email) {
           throw new ApiError(httpStatus.BAD_REQUEST, `Email is required`)
         }
@@ -110,7 +122,11 @@ app.use("/", auth(), async (req, res, next) => {
         await sendEmail(email, 'Reset Password', emailContent);
         res.status(200).json({ message: 'Password reset email sent successfully' });
     } else if (path === "reset-password" && method === "POST") {
-      const { email, password } = req.body;
+      const encodedPayload = req.query.payload;
+      const decodedPayload = JSON.parse(
+        Buffer.from(encodedPayload as string, "base64").toString("utf-8")
+      );
+      const { email, password } = JSON.parse(decodedPayload);
         if (!email || !password) {
           throw new ApiError(httpStatus.BAD_REQUEST, `Email and password are required`)
         }
@@ -134,8 +150,12 @@ app.use("/", auth(), async (req, res, next) => {
         else 
           throw new ApiError(httpStatus.BAD_REQUEST, `Access Denied`)
     } else if (path === "create-job" && method === "POST") {
+      const encodedPayload = req.query.payload;
+      const decodedPayload = JSON.parse(
+        Buffer.from(encodedPayload as string, "base64").toString("utf-8")
+      );
       const { loggedInUser } = req
-        const request = validateType(CreateJobReq, req.body);
+        const request = validateType(CreateJobReq, JSON.parse(decodedPayload));
         if (loggedInUser) {
           const response = await createJobPost(loggedInUser, request)
           res.send(response)

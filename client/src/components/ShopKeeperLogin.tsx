@@ -70,24 +70,26 @@ const ShopKeeperLogin = () => {
     setError(null); // Reset error state
     setDisplayMail(email);
 
+    const payload = JSON.stringify({
+      ownerName,
+      ownerEmail: email,
+      ownerMobile: mobile,
+      shopLocation: locality[0],
+      shopName,
+      password,
+      confirmPassword,
+    });
+
+    const encodedPayload = btoa(JSON.stringify(payload));
     try {
       const response = await fetch(
-        `${API_ENDPOINT_URL}?path=shopkeeper/signup&method=POST`,
+        `${API_ENDPOINT_URL}?path=shopkeeper/signup&method=POST&payload=${encodedPayload}`,
         {
           // method: "POST",
           method: "GET",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({
-            ownerName,
-            ownerEmail: email,
-            ownerMobile: mobile,
-            shopLocation: locality[0],
-            shopName,
-            password,
-            confirmPassword,
-          }),
         }
       );
 
@@ -115,19 +117,21 @@ const ShopKeeperLogin = () => {
     setError(null); // Reset error state
     setDisplayMail(email);
 
+    const encodedPayload = btoa(
+      JSON.stringify({
+        ownerEmail: email,
+        password: password.trim(),
+      })
+    );
     try {
       const response = await fetch(
-        `${API_ENDPOINT_URL}?path=shopkeeper/login&method=POST`,
+        `${API_ENDPOINT_URL}?path=shopkeeper/login&method=POST&payload=${encodedPayload}`,
         {
           method: 'GET',
           // method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            ownerEmail: email,
-            password: password.trim(),
-          }),
+          }
         }
       );
 
@@ -154,17 +158,19 @@ const ShopKeeperLogin = () => {
     setIsFPLoading(true);
     setError(null); // Reset error state
 
+    const encodedPayload = btoa(
+      JSON.stringify({
+        email: email,
+      })
+    );
     try {
       const response = await fetch(
-        `${API_ENDPOINT_URL}?path=forgot-password&method=POST`,
+        `${API_ENDPOINT_URL}?path=forgot-password&method=POST&payload=${encodedPayload}`,
         {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            email: email,
-          }),
+          }
         }
       );
 
