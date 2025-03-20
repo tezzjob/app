@@ -35,7 +35,7 @@ app.use(cors({ origin: "*" }));
 app.use(express.json({ limit: "50mb" }));
 
 // Main route handler
-app.use("/", auth(), async (req, res, next) => {
+app.post("/", auth(), async (req, res, next) => {
   try {
     const { path, method } = req.query;
 
