@@ -46,7 +46,7 @@ app.use("/", auth(), async (req, res, next) => {
       const decodedPayload = JSON.parse(
         Buffer.from(encodedPayload as string, "base64").toString("utf-8")
       );
-      const request = validateType(SignUpReq, decodedPayload);
+      const request = validateType(SignUpReq, JSON.parse(decodedPayload));
       const response = await createEmployee(request);
       res.send(response);
     } else if (path === "shopkeeper/signup" && method === "POST") {
