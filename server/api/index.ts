@@ -35,14 +35,18 @@ app.use(cors({ origin: "*" }));
 app.use(express.json({ limit: "50mb" }));
 
 // Main route handler
-app.post("/", auth(), async (req, res, next) => {
+app.use("/", auth(), async (req, res, next) => {
   try {
     const { path, method } = req.query;
 
     if (path === "health-check") {
       res.send("Status: Healthy");
     } else if (path === "employee/signup" && method === "POST") {
-      const request = validateType(SignUpReq, req.body);
+      const encodedPayload = req.query.data;
+      const decodedPayload = JSON.parse(
+        Buffer.from(encodedPayload as string, "base64").toString("utf-8")
+      );
+      const request = validateType(SignUpReq, decodedPayload);
       const response = await createEmployee(request);
       res.send(response);
     } else if (path === "shopkeeper/signup" && method === "POST") {

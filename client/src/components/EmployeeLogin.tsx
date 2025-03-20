@@ -45,14 +45,21 @@ const EmployeeLogin = () => {
 
     setDisplayMail(email);
     try {
+      const payload = JSON.stringify({
+        name,
+        mobile,
+        email,
+        locality,
+        username,
+      });
+      const encodedPayload = btoa(JSON.stringify(payload));
       const response = await fetch(
-        `${API_ENDPOINT_URL}?path=employee/signup&method=POST`,
+        `${API_ENDPOINT_URL}?path=employee/signup&method=POST&payload=${encodedPayload}`,
         {
-          method: 'POST',
+          // method: 'POST',
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ name, mobile, email, locality, username }),
         }
       );
 
