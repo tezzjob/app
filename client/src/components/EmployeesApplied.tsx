@@ -31,7 +31,7 @@ const EmployeesApplied = () => {
   useEffect(() => {
     const fetchEmployees = async () => {
       try {
-        const response = await fetch(`${API_ENDPOINT_URL}/applied-employees?jobId=${id}`, {
+        const response = await fetch(`${API_ENDPOINT_URL}?path=applied-employees&method=GET&jobId=${id}`, {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('jwtToken')}`,
@@ -64,8 +64,9 @@ const EmployeesApplied = () => {
 
   const handleShortlist = async (employeeId: string, employeeName: string) => {
     try {
-      const response = await fetch(`${API_ENDPOINT_URL}/shortlist-employee?employeeId=${employeeId}&jobId=${id}`, {
-        method: 'POST',
+      const response = await fetch(`${API_ENDPOINT_URL}?path=shortlist-employee&method=POST&employeeId=${employeeId}&jobId=${id}`, {
+        method: 'GET',
+        // method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${localStorage.getItem('jwtToken')}`,

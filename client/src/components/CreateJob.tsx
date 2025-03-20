@@ -35,8 +35,8 @@ const [error, setError] = useState<string | null>(null);
     };
 
     try {
-      const response = await fetch(`${API_ENDPOINT_URL}/create-job`, {
-        method: 'POST',
+      const response = await fetch(`${API_ENDPOINT_URL}?path=create-job&method=POST`, {
+        method: 'GET',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${localStorage.getItem('jwtToken')}`,

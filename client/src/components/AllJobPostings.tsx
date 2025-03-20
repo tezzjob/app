@@ -12,7 +12,7 @@ const AllJobPostings = () => {
   useEffect(() => {
     const fetchJobPostings = async () => {
       try {
-        const response = await fetch(`${API_ENDPOINT_URL}/shop-details`, {
+        const response = await fetch(`${API_ENDPOINT_URL}?path=shop-details&method=GET`, {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('jwtToken')}`,

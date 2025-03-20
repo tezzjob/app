@@ -15,8 +15,8 @@ const ApplyToJob = () => {
 
     const applyToJob = async () => {
       try {
-        const response = await fetch(`${API_ENDPOINT_URL}/apply-to-job?employeeId=${employeeId}&jobId=${jobId}`, {
-          method: 'POST',
+        const response = await fetch(`${API_ENDPOINT_URL}?path=apply-to-job&method=POST&employeeId=${employeeId}&jobId=${jobId}`, {
+          method: 'GET',
           headers: {
             'Content-Type': 'application/json',
           },

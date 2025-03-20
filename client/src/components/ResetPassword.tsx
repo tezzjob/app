@@ -33,13 +33,17 @@ const ResetPassword = () => {
     }
 
     try {
-      const response = await fetch(`${API_ENDPOINT_URL}/reset-password`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email: userEmail, password }),
-      });
+      const response = await fetch(
+        `${API_ENDPOINT_URL}?path=reset-password&method=POST`,
+        {
+          //method: "POST",
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email: userEmail, password }),
+        }
+      );
 
       if (!response.ok) {
         const errorData = await response.json();

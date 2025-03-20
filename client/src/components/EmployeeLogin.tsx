@@ -46,7 +46,7 @@ const EmployeeLogin = () => {
     setDisplayMail(email);
     try {
       const response = await fetch(
-        `${API_ENDPOINT_URL}/?path=employee/signup&method=POST`,
+        `${API_ENDPOINT_URL}?path=employee/signup&method=POST`,
         {
           headers: {
             "Content-Type": "application/json",

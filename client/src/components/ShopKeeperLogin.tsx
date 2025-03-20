@@ -72,11 +72,12 @@ const ShopKeeperLogin = () => {
 
     try {
       const response = await fetch(
-        `${API_ENDPOINT_URL}/shopkeeper/signup`,
+        `${API_ENDPOINT_URL}?path=shopkeeper/signup&method=POST`,
         {
-          method: 'POST',
+          // method: "POST",
+          method: "GET",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
           body: JSON.stringify({
             ownerName,
@@ -116,9 +117,10 @@ const ShopKeeperLogin = () => {
 
     try {
       const response = await fetch(
-        `${API_ENDPOINT_URL}/shopkeeper/login`,
+        `${API_ENDPOINT_URL}?path=shopkeeper/login&method=POST`,
         {
-          method: 'POST',
+          method: 'GET',
+          // method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
@@ -154,9 +156,9 @@ const ShopKeeperLogin = () => {
 
     try {
       const response = await fetch(
-        `${API_ENDPOINT_URL}/forgot-password`,
+        `${API_ENDPOINT_URL}?path=forgot-password&method=POST`,
         {
-          method: 'POST',
+          method: 'GET',
           headers: {
             'Content-Type': 'application/json',
           },

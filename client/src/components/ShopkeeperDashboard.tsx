@@ -68,8 +68,8 @@ const ShopkeeperDashboard = () => {
 
   const handleLogout = async () => {
     try {
-      const response = await fetch(`${API_ENDPOINT_URL}/logout`, {
-        method: 'POST',
+      const response = await fetch(`${API_ENDPOINT_URL}?path=logout&method=POST`, {
+        method: 'GET',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${localStorage.getItem('jwtToken')}`,

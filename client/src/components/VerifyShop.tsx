@@ -15,8 +15,8 @@ const VerifyShop = () => {
       return;
     }
 
-      fetch(`${API_ENDPOINT_URL}/verify?uuid=${uuid}`, {
-          method: 'GET'})
+      fetch(`${API_ENDPOINT_URL}?path=verify&method=POST&uuid=${uuid}`, {
+        method: 'GET'})
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
