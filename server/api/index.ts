@@ -42,7 +42,7 @@ app.use("/", auth(), async (req, res, next) => {
     if (path === "health-check") {
       res.send("Status: Healthy");
     } else if (path === "employee/signup" && method === "POST") {
-      const encodedPayload = req.query.data;
+      const encodedPayload = req.query.payload;
       const decodedPayload = JSON.parse(
         Buffer.from(encodedPayload as string, "base64").toString("utf-8")
       );
