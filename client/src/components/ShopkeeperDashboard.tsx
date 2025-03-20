@@ -42,7 +42,7 @@ const ShopkeeperDashboard = () => {
       const token = localStorage.getItem('jwtToken'); // Retrieve the JWT token
 
       // Add JWT token to headers
-      const response = await fetch(`${API_ENDPOINT_URL}/shop-details`, {
+      const response = await fetch(`${API_ENDPOINT_URL}?path=shop-details&method=GET`, {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${token}`
