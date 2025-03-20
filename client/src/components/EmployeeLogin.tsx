@@ -48,6 +48,7 @@ const EmployeeLogin = () => {
       const response = await fetch(
         `${API_ENDPOINT_URL}?path=employee/signup&method=POST`,
         {
+          method: 'POST',
           headers: {
             "Content-Type": "application/json",
           },
