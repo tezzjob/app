@@ -32,6 +32,7 @@ declare global {
 }
 
 const noAuthPaths = [
+  "/",
   "health-check",
   "employee/signup",
   "shopkeeper/signup",
@@ -54,43 +55,44 @@ export const auth = () => {
     if (noAuthPaths.includes(req.query.path as string)) {
       next();
     } else {
-      try {
-        const authHeader = req.headers["authorization"];
-        if (!authHeader) {
-          res.status(403).json({ auth: false, message: "No token provided." });
-          return;
-        }
+      res.send({ path: req.query.path });
+      // try {
+      //   const authHeader = req.headers["authorization"];
+      //   if (!authHeader) {
+      //     res.status(403).json({ auth: false, message: "No token provided." });
+      //     return;
+      //   }
 
-        const token = authHeader.split(" ")[1];
-        jwt.verify(token, SECRET_KEY, async (err, decoded) => {
-          if (err) {
-            res
-              .status(401)
-              .json({ auth: false, message: "Failed to authenticate token." });
-            return;
-          }
+      //   const token = authHeader.split(" ")[1];
+      //   jwt.verify(token, SECRET_KEY, async (err, decoded) => {
+      //     if (err) {
+      //       res
+      //         .status(401)
+      //         .json({ auth: false, message: "Failed to authenticate token." });
+      //       return;
+      //     }
 
-          const ownerEmail = (decoded as any).ownerEmail;
+      //     const ownerEmail = (decoded as any).ownerEmail;
 
-          // Fetch shop details from the database
-          const shop = await getShop(ownerEmail);
+      //     // Fetch shop details from the database
+      //     const shop = await getShop(ownerEmail);
 
-          // Attach shop details to request
-          req.loggedInUser = {
-            shopId: shop.id,
-            shopName: shop.shopName,
-            ownerName: shop.ownerName,
-            ownerEmail: shop.ownerEmail,
-            ownerMobile: shop.ownerMobile,
-          };
+      //     // Attach shop details to request
+      //     req.loggedInUser = {
+      //       shopId: shop.id,
+      //       shopName: shop.shopName,
+      //       ownerName: shop.ownerName,
+      //       ownerEmail: shop.ownerEmail,
+      //       ownerMobile: shop.ownerMobile,
+      //     };
 
-          // Call next() explicitly to continue to the next middleware or route handler
-          next();
-        });
-      } catch (error) {
-        console.error("Authentication failed", error);
-        res.status(500).json({ message: "Authentication Failed" });
-      }
+      //     // Call next() explicitly to continue to the next middleware or route handler
+      //     next();
+      //   });
+      // } catch (error) {
+      //   console.error("Authentication failed", error);
+      //   res.status(500).json({ message: "Authentication Failed" });
+      // }
     }
   };
 };
