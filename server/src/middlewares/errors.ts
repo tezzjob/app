@@ -67,7 +67,8 @@ let { statusCode, message } = err;
   const response = {
     code: statusCode,
     message,
-    ...(!IS_PRODUCTION && {stack: err.stack})
+    // ...(!IS_PRODUCTION && {stack: err.stack})
+    stack: err.stack
   };
 
   logger.error(err);
