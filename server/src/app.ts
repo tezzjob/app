@@ -41,18 +41,21 @@ app.use("/error", async () => {
 
 app.use(bodyParser.json());
 
+//done
 app.use('/employee/signup', async (req, res) => {
   const request = validateType(SignUpReq, req.body);
   const response = await createEmployee(request);
   res.send(response);
 });
 
+//done
 app.use('/shopkeeper/signup', async (req, res) => {
   const request = validateType(RegisterShopReq, req.body);
   const response = await registerShop(request);
   res.send(response);
 });
 
+//done
 app.use(
   '/shopkeeper/login',
   async (req, res) => {
@@ -75,6 +78,7 @@ app.use(
   }
 );
 
+//done
 app.use('/verify', async (req, res) => {
   const request = validateType(UuidQueryParam, req);
 
@@ -97,6 +101,7 @@ app.use('/verify', async (req, res) => {
   res.json({ success: status, message: msg });
 });
 
+//done
 app.get('/shop-details', auth(), async (req, res) => {
   const { loggedInUser } = req
   if (loggedInUser) {
@@ -107,6 +112,7 @@ app.get('/shop-details', auth(), async (req, res) => {
     throw new ApiError(httpStatus.BAD_REQUEST, `Access Denied`)
 })
 
+//done
 app.post('/create-job', auth(), async (req, res) => {
   const { loggedInUser } = req
   const request = validateType(CreateJobReq, req.body);
@@ -118,12 +124,14 @@ app.post('/create-job', auth(), async (req, res) => {
     throw new ApiError(httpStatus.BAD_REQUEST, `Access Denied`)
 })
 
+//done
 app.post('/apply-to-job', async (req, res) => {
   const request = validateType(ApplyJob, req);
   const response = await applyToJob(request.query.employeeId, request.query.jobId)
   res.send(response);
 })
 
+//done
 app.post('/shortlist-employee', auth(),async (req, res) => {
   const request = validateType(ApplyJob, req);
   const loggedInUser = req.loggedInUser;
@@ -134,6 +142,7 @@ app.post('/shortlist-employee', auth(),async (req, res) => {
     throw new ApiError(httpStatus.BAD_REQUEST, `Access Denied`)
 })
 
+//done
 app.get('/applied-employees', auth(), async (req, res) => {
   const { loggedInUser } = req
   const request = validateType(JobIdQ, req);
@@ -145,7 +154,7 @@ app.get('/applied-employees', auth(), async (req, res) => {
     throw new ApiError(httpStatus.BAD_REQUEST, `Access Denied`)
 })
 
-
+//done
 app.post('/forgot-password', async (req, res) => {
   const { email } = req.body;
   if (!email) {
@@ -167,6 +176,7 @@ app.post('/forgot-password', async (req, res) => {
   res.status(200).json({ message: 'Password reset email sent successfully' });
 });
 
+//done
 app.post('/reset-password', async (req, res) => {
   const { email, password } = req.body;
   if (!email || !password) {
@@ -176,6 +186,7 @@ app.post('/reset-password', async (req, res) => {
   res.send(response);
 });
 
+//done
 app.post('/logout', (req, res) => {
   res.status(200).json({ auth: false, token: null });
 });

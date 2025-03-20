@@ -45,13 +45,15 @@ const EmployeeLogin = () => {
 
     setDisplayMail(email);
     try {
-      const response = await fetch(`${API_ENDPOINT_URL}/employee/signup`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ name, mobile, email, locality, username }),
-      });
+      const response = await fetch(
+        `${API_ENDPOINT_URL}/?path=employee/signup&method=POST`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ name, mobile, email, locality, username }),
+        }
+      );
 
       if (response.status >= 400 && response.status < 500) {
         console.log(response)

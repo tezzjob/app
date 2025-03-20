@@ -35,7 +35,7 @@ app.use(cors({ origin: "*" }));
 app.use(express.json({ limit: "50mb" }));
 
 // Main route handler
-app.use("/", async (req, res, next) => {
+app.use("/", auth(), async (req, res, next) => {
   try {
     const { path, method } = req.query;
 
@@ -43,38 +43,120 @@ app.use("/", async (req, res, next) => {
       res.send("Status: Healthy");
     } else if (path === "employee/signup" && method === "POST") {
       const request = validateType(SignUpReq, req.body);
-      res.send(await createEmployee(request));
+      const response = await createEmployee(request);
+      res.send(response);
     } else if (path === "shopkeeper/signup" && method === "POST") {
       const request = validateType(RegisterShopReq, req.body);
-      res.send(await registerShop(request));
+      const response = await registerShop(request);
+      res.send(response);
     } else if (path === "shopkeeper/login" && method === "POST") {
       const { ownerEmail, password } = req.body;
-      if (!password || !ownerEmail)
-        throw new ApiError(400, "Missing credentials");
-
+      if(password === undefined || ownerEmail === undefined) {
+        res.status(400).json({ auth: false, token: null });
+        return
+      }
       const shop = await getShop(ownerEmail);
-      if (shop.password !== password)
-        throw new ApiError(401, "Invalid credentials");
-
-      const token = generateToken({ shopId: shop.id, ownerEmail });
-      res.json({ auth: true, token, email: ownerEmail });
+      
+      const passwordIsValid = (password as string) === shop.password;
+      if (!passwordIsValid) {
+        res.status(401).json({ auth: false, token: null });
+        return
+      }
+  
+      const token = generateToken({ shopId: shop.id, ownerEmail: shop.ownerEmail });
+      res.status(200).json({ auth: true, token, email: shop.ownerEmail });
+      return
     } else if (path === "verify") {
       const request = validateType(UuidQueryParam, req);
-      await verifyShop(request.query.uuid);
-      res.json({ success: true, message: "Account verified successfully!" });
+
+      if (!request.query.uuid) {
+        res
+          .status(400)
+          .json({ success: false, message: "Unable to verify account" });
+      }
+      let msg = "Account verified successfully!";
+      let status = true;
+
+      try {
+        await verifyShop(request.query.uuid);
+      } catch (error) {
+        if (error instanceof ApiError) msg = error.message;
+        else msg = "Verification failed";
+        status = false;
+      }
+
+      res.json({ success: status, message: msg });
     } else if (path === "forgot-password" && method === "POST") {
       const { email } = req.body;
-      if (!email) throw new ApiError(400, "Email required");
-
-      const link = `${APP_URL}/reset-password?userEmail=${encodeURIComponent(email)}`;
-      await sendEmail(
-        email,
-        "Reset Password",
-        `<a href="${link}">Reset Password</a>`
+        if (!email) {
+          throw new ApiError(httpStatus.BAD_REQUEST, `Email is required`)
+        }
+      
+        const resetPasswordLink = `${APP_URL}/reset-password?userEmail=${encodeURIComponent(email)}`;
+        const emailContent = `
+          <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
+            <p>Hey there,</p>
+            <p>Click on the link below to reset your password:</p>
+            <p><a href="${resetPasswordLink}" style="color: #007bff; text-decoration: none;">Reset Password</a></p>
+            <p>If you did not request a password reset, please ignore this email.</p>
+            <p>Regards,<br/>TezzJob Team</p>
+          </div>
+        `;
+      
+        await sendEmail(email, 'Reset Password', emailContent);
+        res.status(200).json({ message: 'Password reset email sent successfully' });
+    } else if (path === "reset-password" && method === "POST") {
+      const { email, password } = req.body;
+        if (!email || !password) {
+          throw new ApiError(httpStatus.BAD_REQUEST, `Email and password are required`)
+        }
+        const response = await resetPassword(email, password);
+        res.send(response);
+    } else if (path === "logout" && method === "POST") {
+      res.status(200).json({ auth: false, token: null });
+    } else if (path === "apply-to-job" && method === "POST") {
+      const request = validateType(ApplyJob, req);
+      const response = await applyToJob(
+        request.query.employeeId,
+        request.query.jobId
       );
-      res.json({ message: "Password reset email sent successfully" });
+      res.send(response);
+    } else if (path === "shop-details" && method === "GET") {
+      const { loggedInUser } = req
+        if (loggedInUser) {
+          const details = await getShopDetails(loggedInUser)
+          res.send(details)
+        }
+        else 
+          throw new ApiError(httpStatus.BAD_REQUEST, `Access Denied`)
+    } else if (path === "create-job" && method === "POST") {
+      const { loggedInUser } = req
+        const request = validateType(CreateJobReq, req.body);
+        if (loggedInUser) {
+          const response = await createJobPost(loggedInUser, request)
+          res.send(response)
+        }
+        else
+          throw new ApiError(httpStatus.BAD_REQUEST, `Access Denied`)
+    } else if (path === "shortlist-employee" && method === "POST") {
+      const request = validateType(ApplyJob, req);
+        const loggedInUser = req.loggedInUser;
+        if (loggedInUser) {
+          const response = await setEmployeeAcceptStatus(loggedInUser, request.query.employeeId, request.query.jobId, true)
+            res.send(response);
+        } else 
+          throw new ApiError(httpStatus.BAD_REQUEST, `Access Denied`)
+    } else if (path === "applied-employees" && method === "GET") {
+      const { loggedInUser } = req
+        const request = validateType(JobIdQ, req);
+        if (loggedInUser) {
+          const response = await getApplicants(loggedInUser, request.query.jobId)
+          res.send(response)
+        }
+        else
+          throw new ApiError(httpStatus.BAD_REQUEST, `Access Denied`)
     } else {
-      throw new ApiError(404, "Route not found");
+      next(new ApiError(httpStatus.NOT_FOUND, 'Not found'))
     }
   } catch (error) {
     next(error);

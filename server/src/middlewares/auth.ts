@@ -31,6 +31,18 @@ declare global {
   }
 }
 
+const noAuthPaths = [
+  "health-check",
+  "employee/signup",
+  "shopkeeper/signup",
+  "shopkeeper/login",
+  "verify",
+  "forgot-password",
+  "reset-password",
+  "logout",
+  "apply-to-job",
+];
+
 // Verify Token Middleware
 export const auth = () => {
   return async (
@@ -38,42 +50,47 @@ export const auth = () => {
     res: Response,
     next: NextFunction
   ): Promise<void> => {
-    try {
-      const authHeader = req.headers['authorization'];
-      if (!authHeader) {
-        res.status(403).json({ auth: false, message: 'No token provided.' });
-        return;
-      }
 
-      const token = authHeader.split(' ')[1];
-      jwt.verify(token, SECRET_KEY, async (err, decoded) => {
-        if (err) {
-          res
-            .status(401)
-            .json({ auth: false, message: 'Failed to authenticate token.' });
+    if (noAuthPaths.includes(req.query.path as string)) {
+      next();
+    } else {
+      try {
+        const authHeader = req.headers["authorization"];
+        if (!authHeader) {
+          res.status(403).json({ auth: false, message: "No token provided." });
           return;
         }
 
-        const ownerEmail = (decoded as any).ownerEmail;
+        const token = authHeader.split(" ")[1];
+        jwt.verify(token, SECRET_KEY, async (err, decoded) => {
+          if (err) {
+            res
+              .status(401)
+              .json({ auth: false, message: "Failed to authenticate token." });
+            return;
+          }
 
-        // Fetch shop details from the database
-        const shop = await getShop(ownerEmail)
+          const ownerEmail = (decoded as any).ownerEmail;
 
-        // Attach shop details to request
-        req.loggedInUser = {
-          shopId: shop.id,
-          shopName: shop.shopName,
-          ownerName: shop.ownerName,
-          ownerEmail: shop.ownerEmail,
-          ownerMobile: shop.ownerMobile,
-        };
+          // Fetch shop details from the database
+          const shop = await getShop(ownerEmail);
 
-        // Call next() explicitly to continue to the next middleware or route handler
-        next();
-      });
-    } catch (error) {
-      console.error('Authentication failed', error);
-      res.status(500).json({ message: 'Authentication Failed' });
+          // Attach shop details to request
+          req.loggedInUser = {
+            shopId: shop.id,
+            shopName: shop.shopName,
+            ownerName: shop.ownerName,
+            ownerEmail: shop.ownerEmail,
+            ownerMobile: shop.ownerMobile,
+          };
+
+          // Call next() explicitly to continue to the next middleware or route handler
+          next();
+        });
+      } catch (error) {
+        console.error("Authentication failed", error);
+        res.status(500).json({ message: "Authentication Failed" });
+      }
     }
   };
 };
